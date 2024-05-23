@@ -1,0 +1,35 @@
+mandatory:
+1. Composer (php support)
+2. xampp (php and database support)
+3. git (mandatory)
+4. npm (mandatory) https://nodejs.org/en/download/
+
+optional:
+1. github
+2. MySqlWorkbench (database design)
+
+2 SIMD
+umkm-soto
+UI:
+1. User View
+2. Admin View
+
+database: ok
+installation
+
+what to do after installation default and breeze:
+1. php artisan make:model HeaderImage --all
+
+
+
+
+
+
+
+
+
+
+
+
+
+
