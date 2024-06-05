@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Header Images') }}
+            {{ __('Product') }}
         </h2>
     </x-slot>
 
@@ -18,7 +18,7 @@
                             <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
                         </div>
                         <div>
-                            <a href="{{route('admin.header-images.create')}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Header Image</a>
+                            <a href="{{route('admin.products.create')}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Product</a>
                         </div>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -26,13 +26,16 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
-                                        Title
+                                        Name
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Image Url
+                                        Category
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Url Link
+                                        Price
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Description
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         <span class="sr-only">Action</span>
@@ -40,31 +43,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($headerImages) == 0)
+                                @if (count($products) == 0)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td colspan="4" class="px-6 py-4 text-center"> -- No Data -- </td>
                                 </tr>                                
                                 @else
-                                    @foreach ($headerImages as $headerImage)
+                                    @foreach ($products as $product)
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{$headerImage->title}}
+                                                {{$product->name}}
                                             </th>
                                             <td class="px-6 py-4">
-                                                <img class="w-10 h-10 rounded" src="{{$headerImage->image_url}}" alt="Default avatar">
-                                                
+                                                {{$product->product_category->name}}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{$headerImage->url_link}}
+                                                {{$product->price}}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{$product->description}}
                                             </td>
                                             <td class="px-6 py-4 text-right">
-                                                <a href="{{route('admin.header-images.edit', $headerImage)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                                <a x-data="" x-on:click.prevent="$dispatch('open-modal', 'delete-confirmation-{{$headerImage->id}}')" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
-                                                <x-modal name="delete-confirmation-{{$headerImage->id}}" :shows="$errors->headerImageDeletion->isNotEmpty()" focusable>
-                                                    <form action="{{route('admin.header-images.destroy', $headerImage)}}" method="POST" class="p-6 text-center">
+                                                <a href="{{route('admin.products.product-images.index', $product)}}" class="font-medium text-green-600 dark:text-green-500 hover:underline">Images</a>
+
+                                                <a href="{{route('admin.products.edit', $product)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+
+                                                <a x-data="" x-on:click.prevent="$dispatch('open-modal', 'delete-confirmation-{{$product->id}}')" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+
+                                                <x-modal name="delete-confirmation-{{$product->id}}" :shows="$errors->productDeletion->isNotEmpty()" focusable>
+                                                    <form action="{{route('admin.products.destroy', $product)}}" method="POST" class="p-6 text-center">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <h2>Want Delete this header image? {{$headerImage->title}}</h2>
+                                                        <h2>Want Delete this product? {{$product->title}}</h2>
                                                         <div class="mt-6 flex justify-end">
                                                             <x-secondary-button x-on:click="$dispatch('close')">{{__('Cancel')}}</x-secondary-button>
                                                             <x-danger-button class="ms-3">{{__('Delete')}}</x-danger-button>
@@ -79,7 +88,7 @@
                         </table>
                     </div>
                     <div class="px-6 py-4">
-                        {{$headerImages->links()}}
+                        {{$products->links()}}
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ class HeaderImageController extends Controller
                 $q->orWhere('image_url', 'ilike', '%'.$request['search'].'%');
                 $q->orWhere('url_link', 'ilike', '%'.$request['search'].'%');
             }
-        })->orderBy('sequence', 'asc')->paginate(1);
+        })->orderBy('sequence', 'asc')->paginate(5);
 
         return view ('admin.header-images.index', compact('headerImages'));
     }
@@ -44,10 +44,9 @@ class HeaderImageController extends Controller
             // INSERT INTO header_images VALUES()
             $headerImage = HeaderImage::create($request->all());
             DB::commit();
-            return redirect()->route('header-images.index')->withSuccess('Create Header Image Success');
+            return redirect()->route('admin.header-images.index')->withSuccess('Create Header Image Success');
         } catch (\Exception $exp) {
             DB::rollback();
-            dd($exp->getMessage());
             return redirect()->back()->withErrors($exp->getMessage())->withInput();
         }
     }
@@ -78,7 +77,7 @@ class HeaderImageController extends Controller
             // UPDATE header_images SET()
             $headerImage->update($request->all());
             DB::commit();
-            return redirect()->route('header-images.index')->withSuccess('Update Header Image Success');
+            return redirect()->route('admin.header-images.index')->withSuccess('Update Header Image Success');
         } catch (\Exception $exp) {
             DB::rollback();
             return redirect()->back()->withErrors($exp->getMessage())->withInput();
@@ -95,10 +94,10 @@ class HeaderImageController extends Controller
             // DELETE * FROM header_images
             $headerImage->delete();
             DB::commit();
-            return redirect()->route('header-images.index')->withSuccess('Delete Header Image Success');
+            return redirect()->route('admin.header-images.index')->withSuccess('Delete Header Image Success');
         } catch (\Exception $exp) {
             DB::rollback();
-            return redirect()->route('header-images.index')->withErrors($exp->getMessage())->withInput();
+            return redirect()->route('admin.header-images.index')->withErrors($exp->getMessage())->withInput();
         }
     }
 }

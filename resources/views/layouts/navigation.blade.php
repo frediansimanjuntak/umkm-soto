@@ -15,8 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('header-images.index')" :active="request()->routeIs('header-images')">
+                    <x-nav-link :href="route('admin.header-images.index')" :active="request()->routeIs('header-images')">
                         {{ __('Header Images') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.product-categories.index')" :active="request()->routeIs('product-categories')">
+                        {{ __('Product Categories') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('products')">
+                        {{ __('Products') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -73,7 +79,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('header-images.index')" :active="request()->routeIs('header-images')">
+            <x-responsive-nav-link :href="route('admin.header-images.index')" :active="request()->routeIs('header-images')">
                 {{ __('Header Images') }}
             </x-responsive-nav-link>
         </div>
